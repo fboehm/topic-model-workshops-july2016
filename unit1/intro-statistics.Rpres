@@ -1,0 +1,26 @@
+Introduction to Statistics & Probability
+========================================================
+author: Fred Boehm
+date: July 11, 2016
+autosize: true
+
+Overview of Workshops
+========================================================
+
+
+
+
+
+Slide With Code
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
