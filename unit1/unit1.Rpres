@@ -1,0 +1,38 @@
+Unit 1: Introduction to Statistical Computing with R
+========================================================
+author: Fred Boehm
+date: July 11, 2016
+autosize: true
+
+Overview of Workshops
+========================================================
+
+1. Introduction to computing with R (and RStudio)
+2. What is a topic model? 
+2. Topic modeling with R
+4. Visualizing topic models with R
+
+
+Workshop 1 Learning Objectives
+========================================================
+
+1. To reason with probabilities and conditional probabilities.
+2. To compute conditional probabilities when given (unconditional) probabilities.
+3. To define statistical independence.
+4. To use statistical independence in probability calculations.
+
+
+
+Slide With Code
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
