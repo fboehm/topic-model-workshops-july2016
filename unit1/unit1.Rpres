@@ -1,38 +1,106 @@
 Unit 1: Introduction to Statistical Computing with R
-========================================================
+===============================
 author: Fred Boehm
 date: July 11, 2016
 autosize: true
 
 Overview of Workshops
-========================================================
+=========================================
 
 1. Introduction to computing with R (and RStudio)
-2. What is a topic model? 
+2. Data wrangling with R
 2. Topic modeling with R
 4. Visualizing topic models with R
 
 
 Workshop 1 Learning Objectives
-========================================================
+===================================
 
-1. To reason with probabilities and conditional probabilities.
-2. To compute conditional probabilities when given (unconditional) probabilities.
-3. To define statistical independence.
-4. To use statistical independence in probability calculations.
+1. To read and manipulate data sets in R. 
+2. To write (and execute) code in a .R file.
+3. To use R to perform summary statistic calculations for a (text) data set.
+4. 
 
 
 
-Slide With Code
-========================================================
+What is R? 
+==================================
+
+- R is a computing environment for statistics and graphics
+- R is widely used by statisticians
+
+
+
+Why R? 
+====================
+
+- It's free
+- Large user community that shares code
+- Many machine learning algorithms are implemented in existing add-on packages
+
+
+What is Rstudio?
+=======
+
+- Rstudio is an integrated development environment (IDE) for R
+- Rstudio is not necessary to run R, but it often makes it easier
+- Rstudio is available for free download
+
+
+
+Getting started with Rstudio
+========
+
+- Open the Rstudio application on your computer
+- You should see a window with 3 or 4 subwindows. 
+
+Organizing your work
+=====
+
+- Let's use an "R project" to organize our work
+- From the "File" menu in Rstudio, choose "New Project"
+- Choose "New directory", then "Empty project"
+- Use the menu to navigate your file directory to a location where you can create a new directory. Call it "R-workshops"
+
+Our first R script
+==============
+
+- From the "File" menu in Rstudio, choose "New File", then "R script"
+  - This results in a new tab opening in Rstudio's upper left-hand window
+  - Notice that it is a plain text file
+  - You can type, after clicking in the new window
+
+Our first R script
+======
+
+- We typically want to work with data when using R. To do that, we need to read data into R. 
+- There are many functions that allow R to read the contents of files
+- We'll use `readLines` to read a file containing New York Times full text articles (from Lexis Nexis)
+
+Downloading data from box.com
+==========
+
+- Download the data from box.com using the emailed hyperlink.
+- Store the data files in the subdirectory "R-workshops/data/"
+  - You may need to create the "data" subdirectory
+
+Reading the first NY Times file
+======
 
 ```{r}
-summary(cars)
+
 ```
 
-Slide With Plot
-========================================================
 
-```{r, echo=FALSE}
-plot(cars)
-```
+
+
+
+
+
+
+Where can I learn more about R? 
+=================
+
+- Mark Banghart's R for Researchers: <https://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_Introduction.html>
+- Matthew Jockers's book "Text analysis with R" (see box.com folder 'refs')  
+- For specific tasks in R, do a google search
