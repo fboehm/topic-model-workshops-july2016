@@ -1,0 +1,153 @@
+Unit 2: Text data wrangling with R
+===============================
+author: Fred Boehm
+date: July 14, 2016
+autosize: true
+
+Homework & Questions
+====
+
+- Did you have a chance to do the suggested homework?
+  - Which collection of texts did you download? Why? 
+  - What did you think of the chapter 13 reading? Questions?
+  
+
+Workshop 2 Learning Objectives
+=========
+
+1. 
+
+
+
+
+Continuing with our text processing
+====
+
+- To re-do the analyses from our first session, we'll use the `source()` function:
+  - You may need to change the directory path in the following command:
+
+```{r}
+source("../unit1/unit1.R")
+```
+
+- This runs the entirety of the code in the file "unit1.R"
+
+What do we still need to do? 
+====
+
+- Goal: A vector for each article, where each word is one element in the vector
+
+We currently have `tx_list2` object: 
+
+```{r}
+length(tx_list2)
+is.list(tx_list2)
+```
+
+
+Recall an element of tx_list2
+====
+
+```{r}
+head(tx_list2[[1]])
+```
+
+Making a stop list
+===
+
+- A stop list is a list of words that we'll remove from our collection of words to be analyzed
+- For many analyses, we want to remove pronouns, articles, and other short words
+
+Making a stop list
+===
+
+```{r}
+library(tm)
+stopwords <- c(tm::stopwords("SMART"), "dr", "mr", "ms", "mrs") # add titles to stoplist
+```
+
+
+What is the pipe `%>%`? 
+===
+- Like a 'pipe' in shell scripting
+- Takes the output of one operation and makes it the input of the next operation
+
+```{r}
+letters
+```
+
+What is the pipe? 
+===
+
+```{r}
+head(letters)
+letters %>% head
+```
+
+
+More processing steps
+===
+
+```{r split_and_remove_punctuation}
+good2 <- sapply(FUN = function(x)paste(x, collapse = " "), X = tx_list2)  %>%
+  stringr::str_split( pattern = " ") 
+```
+
+More processing steps
+===
+
+```{r}
+head(good2[[1]])
+```
+
+
+More processing steps
+===
+
+```{r}
+good2 <- sapply(FUN = function(x) gsub("'", "", x), X = good2) %>% 
+  # remove apostrophes
+  sapply(FUN = function(x) gsub("[[:punct:]]", " ", x)) %>%  
+  # replace punctuation with space
+  sapply(FUN = function(x) gsub("[[:cntrl:]]", " ", x)) %>% 
+  # replace control characters with space
+  sapply(FUN = function(x) gsub("^[[:space:]]+", "", x)) %>% 
+  # remove whitespace at beginning of documents
+  sapply(FUN = function(x) gsub("[[:space:]]+$", "", x))  
+  # remove whitesp at end
+```
+
+More processing steps
+===
+
+```{r}
+head(good2[[1]])
+```
+
+
+
+More processing steps
+===
+
+```{r}
+good2 <-  sapply(FUN = function(x)tolower(x), X = good2) %>%
+  sapply(FUN = function(x)x[!(x == "")]) %>% 
+  # remove elements that are ""
+  sapply(FUN = function(x)x[!(x %in% stopwords)])
+# remove stopwords
+```
+
+More processing steps
+===
+
+```{r}
+head(good2[[1]])
+```
+
+
+
+Next Steps
+=======
+
+
+

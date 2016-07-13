@@ -1,0 +1,13 @@
+---
+title: 'R workshops: Homework 1'
+author: "Fred Boehm"
+date: "July 11, 2016"
+output: pdf_document
+---
+
+
+1. **Coding practice**: Adapt the code from "unit1.R" to read and analyze a collection of articles that interest you. You might want to perform a search on Lexis Nexis to get a set of text files that you find particularly interesting. 
+
+2. **Reading**: Chapter 13 of Matthew Jockers's book "Text analysis with R for students of literature" (pdf of which is in the 'refs' folder on box.com) discusses topic modeling. I suggest that you read it and note areas of confusion and aspects that require discussion. We can then talk about them in later sessions.
+
+*Please feel free to email me, Fred <fjboehm@wisc.edu>, with any questions.*

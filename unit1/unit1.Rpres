@@ -8,7 +8,7 @@ Overview of Workshops
 =========================================
 
 1. Introduction to computing with R (and RStudio)
-2. Data wrangling with R
+2. Text data wrangling with R
 2. Topic modeling with R
 4. Visualizing topic models with R
 
@@ -19,7 +19,8 @@ Workshop 1 Learning Objectives
 1. To read and manipulate data sets in R. 
 2. To write (and execute) code in a .R file.
 3. To use R to perform summary statistic calculations for a (text) data set.
-4. 
+4. To install and use freely available R packages
+
 
 
 
@@ -52,6 +53,7 @@ Getting started with Rstudio
 ========
 
 - Open the Rstudio application on your computer
+  - You don't need to work directly with the R icon
 - You should see a window with 3 or 4 subwindows. 
 
 Organizing your work
@@ -75,7 +77,7 @@ Our first R script
 
 - We typically want to work with data when using R. To do that, we need to read data into R. 
 - There are many functions that allow R to read the contents of files
-- We'll use `readLines` to read a file containing New York Times full text articles (from Lexis Nexis)
+- We'll use `scan` to read a file containing New York Times full text articles (from Lexis Nexis)
 
 Downloading data from box.com
 ==========
@@ -88,14 +90,177 @@ Reading the first NY Times file
 ======
 
 ```{r}
-
+tx1 <- scan(file = "../data/The_New_York_Times2016-03-21_17-02.TXT", what = "character", blank.lines.skip = TRUE, sep = "\n", encoding = "UTF-8", skipNul = TRUE) 
 ```
 
 
 
 
+Reading second NYT file
+=========
+
+```{r}
+tx2 <- scan(file = "../data/The_New_York_Times2016-03-21_17-04.TXT", what = "character", blank.lines.skip = TRUE, sep = "\n", encoding = "UTF-8", skipNul = TRUE)
+tx <- c(tx1, tx2)
+```
+
+Install a package from CRAN
+=====
+
+```{r, eval = FALSE}
+install.packages("praise")
+```
+- Note that name of package is case-sensitive and must be within quotation marks when installing
 
 
+
+
+Examining `tx` R object
+=====
+
+```{r}
+# what is tx? 
+class(tx)
+is.vector(tx)
+```
+
+- So we know that `tx` is a character vector
+
+```{r}
+praise::praise()
+```
+
+
+
+Examining `tx` R object
+=====
+
+```{r}
+head(tx)
+```
+
+
+Examining `tx` R object
+=====
+
+```{r}
+tail(tx)
+```
+
+How do we partition `tx` into distinct stories?
+======
+
+```{r}
+tx[55:61]
+```
+
+How do we partition `tx` into distinct stories?
+======
+
+```{r}
+tx[55:61]
+```
+
+How do we partition `tx` into distinct stories?
+======
+
+```{r}
+tx[59:60]
+```
+
+- The "Copyright 2016" line is the last line for the first story within `tx`
+
+How do we partition `tx` into distinct stories?
+=====
+
+- Let's install the R package `wordtools`
+- `wordtools` is on github
+
+```{r, eval = FALSE}
+install.packages("devtools")
+```
+
+```{r, eval = FALSE}
+devtools::install_github("fboehm/wordtools")
+```
+
+Using wordtools
+=====
+
+- Let's see which functions are available in `wordtools`
+```{r, eval = FALSE}
+help(package = "wordtools")
+```
+
+- Within Rstudio, you should see that there's a "Help" window in the lower right-hand corner
+
+Partitioning tx
+======
+
+```{r}
+tx_list <- wordtools::split_tx(tx, patt = "Copyright 201")
+```
+
+What is a R list? 
+=======
+
+```{r}
+is.list(tx_list)
+length(tx_list)
+```
+- Recall that there are 746 downloaded stories
+
+What does tx_list look like?
+====
+
+```{r}
+head(tx_list[[1]])
+```
+
+- Note double brackets needed to index a 'list'
+
+tx_list is a "list of character vectors"
+====
+
+```{r}
+is.vector(tx_list[[1]])
+is.list(tx_list[[1]])
+is.character(tx_list[[1]])
+length(tx_list[[1]])
+```
+
+stringr R package for manipulating character vectors
+====
+
+```{r, eval = FALSE}
+install.packages("stringr")
+```
+
+
+
+
+Removing lines from each story
+====
+
+```{r}
+library(stringr)
+tx_list2<- sapply(FUN = function(x)x[-(1:which(str_detect(string = x, pattern = "LENGTH")))], X = tx_list) 
+```
+
+stringr::str_detect
+===
+- Let's examine the help file for `str_detect`
+
+```{r, eval = FALSE}
+?str_detect
+```
+
+Next Steps
+=======
+
+- We'll want to break the articles into individual words
+- Remove punctuation
+- Remove stop words
 
 
 Where can I learn more about R? 
@@ -103,4 +268,4 @@ Where can I learn more about R?
 
 - Mark Banghart's R for Researchers: <https://www.ssc.wisc.edu/sscc/pubs/RFR/RFR_Introduction.html>
 - Matthew Jockers's book "Text analysis with R" (see box.com folder 'refs')  
-- For specific tasks in R, do a google search
+- For specific tasks (and errors) in R, do a google search
