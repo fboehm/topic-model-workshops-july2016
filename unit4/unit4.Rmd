@@ -1,0 +1,181 @@
+Unit 4: Topic modeling in R
+===============================
+author: Fred Boehm
+date: July 21, 2016
+autosize: true
+
+
+Workshop 4 Learning Objectives
+=========
+
+1. Fit LDA models with R code
+2. Study the effect of different values of $K$ (number of topics)
+3. Compare results across media sources (Twitter vs. New York Times print)
+
+
+
+
+Preparing inputs for LDA modeling
+====
+
+- To re-do the analyses from our first two sessions, we'll use the `source()` function:
+  - You may need to change the directory path in the following command:
+
+```{r}
+source("../unit2/unit2.R")
+```
+
+- This runs the entirety of the code in the file "unit2.R"
+
+
+Recall the data structures 
+====
+
+New York Times articles are stored in `good2` list
+
+```{r}
+head(good2[[1]])
+```
+
+Tweets are stored in `tw_words`
+
+```{r}
+head(tw_words)
+```
+
+
+What do we still need to do?
+====
+
+- Goal: For each media source (NYT and Twitter, separately), we need to determine the vocabulary & format data for input to `lda::lda.collapsed.gibbs.sampler`
+
+
+
+
+
+What input format is needed?
+====
+
+```{r}
+# from http://cpsievert.github.io/LDAvis/reviews/reviews.html
+# compute the table of terms:
+n_min <- 3
+term_table <- table(unlist(good2)) %>% 
+  sort(decreasing = TRUE)
+term_table <- term_table[term_table >= n_min]
+```
+
+Above, we remove those terms that appear fewer than 3 times in the corpus.
+
+What is 'term_table'?
+====
+
+```{r}
+head(term_table)
+```
+
+
+Using 'term_table' to make a vocabulary
+===
+
+```{r}
+vocab <- names(term_table)
+head(vocab)
+```
+
+
+
+Formatting documents
+===
+
+```{r}
+get_terms <- function(x) {
+  index <- match(x, vocab)
+  index <- index[!is.na(index)]
+  rbind(as.integer(index - 1), as.integer(rep(1, length(index))))
+}
+documents <- lapply(good2, get_terms)
+```
+
+What is the 'documents' object?
+===
+
+```{r}
+head(documents[[1]])
+```
+
+
+
+What is the 'documents' object?
+===
+
+```{r}
+is.list(documents)
+head(documents[[2]])
+```
+
+
+Calculate summary statistics 
+===
+
+```{r}
+D <- length(documents)  # number of documents 
+W <- length(vocab)  # number of terms in the vocab
+doc.length <- sapply(documents, function(x) sum(x[2, ]))  # number of tokens per document 
+N <- sum(doc.length)  # total number of tokens in the data 
+term.frequency <- as.integer(term_table)  # frequencies of terms in the corpus
+```
+
+
+Set input parameters
+===
+
+```{r lda-20, cache = TRUE}
+# MCMC and model tuning parameters:
+K <- 20
+G <- 5000
+alpha <- 0.02
+eta <- 0.02
+```
+
+
+
+
+```{r}
+# Fit the model:
+library(lda)
+set.seed(2016-07-21)
+fit1 <- lda.collapsed.gibbs.sampler(documents = documents, K = K, vocab = vocab, 
+                                   num.iterations = G, alpha = alpha, 
+                                   eta = eta, initial = NULL, burnin = 1000,
+                                   compute.log.likelihood = TRUE)
+```
+
+What is 'fit1'?
+===
+
+```{r}
+str(fit1)
+```
+
+
+Make a wordcloud for a single topic
+====
+```{r}
+library(wordcloud)
+i <- 1
+  cloud.data<-sort(fit1$topics[i,], decreasing=TRUE)[1:50]
+  wordcloud(names(cloud.data), freq=cloud.data, scale=c(3,.10), min.freq=1, rot.per=0, random.order=FALSE)
+```
+
+
+Make a second wordcloud
+====
+```{r}
+library(wordcloud)
+i <- 2
+  cloud.data<-sort(fit1$topics[i,], decreasing=TRUE)[1:50]
+  wordcloud(names(cloud.data), freq=cloud.data, scale=c(3,.10), min.freq=1, rot.per=0, random.order=FALSE)
+```
+
+
