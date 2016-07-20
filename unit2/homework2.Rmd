@@ -1,0 +1,18 @@
+---
+title: "Homework 2"
+author: "Fred Boehm"
+date: "July 14, 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Review chapter 13 of Matthew Jockers's text (pdf is on box.com) for background on topic modeling.
+2. Apply the R code from unit2.R to the articles that you downloaded for homework #1. 
+3. For a glance at the vastness of the topic modeling literature, see David Mimno's bibliography: 
+<https://mimno.infosci.cornell.edu/topics.html>
+
+
+*Email Fred (fjboehm@wisc.edu) with questions!*

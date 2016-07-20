@@ -1,22 +1,16 @@
-Unit 2: Text data wrangling with R
+Unit 4: Topic modeling in R
 ===============================
 author: Fred Boehm
-date: July 14, 2016
+date: July 21, 2016
 autosize: true
 
-Homework & Questions
-====
 
-- Did you have a chance to do the suggested homework?
-  - Which collection of texts did you download? Why? 
-  - What did you think of the chapter 13 reading? Questions?
-  
-
-Workshop 2 Learning Objectives
+Workshop 4 Learning Objectives
 =========
 
-1. Process print media and Twitter data
-2. Apply R code to a new data set
+1. Fit LDA models with R code
+2. Study the effect of different values of $K$ (number of topics)
+3. Compare results across media sources (Twitter vs. New York Times print)
 
 
 
@@ -24,14 +18,15 @@ Workshop 2 Learning Objectives
 Continuing with our text processing
 ====
 
-- To re-do the analyses from our first session, we'll use the `source()` function:
+- To re-do the analyses from our first two sessions, we'll use the `source()` function:
   - You may need to change the directory path in the following command:
 
 ```{r}
 source("../unit1/unit1.R")
+source("../unit2/unit2.R")
 ```
 
-- This runs the entirety of the code in the file "unit1.R"
+- This runs the entirety of the code in the files "unit1.R" and "unit2.R"
 
 What do we still need to do? 
 ====
